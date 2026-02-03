@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            #board-game {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr;
+                gap: 15px;
+                height: 60vh;
+            }
+            .card {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                /* font-size: 60vh; */
+                background-color: rgb(0, 0, 0);
+                border: solid;
+            }
+            .letter{
+                font-size: 10vh;
+            }
+            .flipped {
+                background-color: rgb(255, 85, 85);
+            }
+            .yees {
+                color: yellow;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="board-game"></div>
+    </body>
+
+    <script>
+        const board = document.getElementById("board-game")
+        const arr = ["A", "A", "B", "B", "C", "C", "D", "D", "E", "E", "F", "F"]
+        const arr2 = []
+        const indexs = []
+
+        arr.forEach((letter,i) => {
+            let div = document.createElement("div")            
+            div.classList.add("card")
+            let p = document.createElement("p")
+            p.classList.add("letter")
+
+            p.innerHTML = letter
+            div.appendChild(p)
+
+            div.addEventListener("click", () => {
+                div.classList.add("flipped")
+                arr2.push(div)
+                indexs.push(i)
+                console.log(indexs);
+                const flipped = document.getElementsByClassName("flipped")
+                if (arr2.length === 2) {
+                    if (arr2[0].textContent === arr2[1].textContent && indexs[0] !== indexs[1]) {
+                        setTimeout(() => {
+                            arr2[0].remove()
+                            arr2[1].remove()
+                            arr2.splice(0, 2)
+                            indexs.splice(0,2)
+                        }, 400)
+                    } else {
+                        setTimeout(() => {
+                            arr2[0].classList.remove("flipped")
+                            arr2[1].classList.remove("flipped")
+                            arr2.splice(0, 2)
+                            indexs.splice(0,2)
+                        }, 400)
+                    }
+                }
+            })
+            board.appendChild(div)
+        })
+    </script>
+</html>
